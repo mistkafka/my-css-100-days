@@ -1,0 +1,192 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.v-h-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+
+  .v-h-center();
+
+}
+
+@cubic-bezier: cubic-bezier(.4,0,.49,1);
+@mountain-height: 57px;
+@mountain-width: 116px;
+@shadow-clip-at-mountain-left: (180px - @mountain-width / 2);
+@shadow-clip-at-mountain-right: (180px - @mountain-width / 2 + @mountain-width);
+
+.container {
+  height: 400px;
+  width: 400px;
+  box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.2);
+  background: #272C34;
+
+  .v-h-center();
+
+  .pyramide {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    clip-path: circle(90px at 90px 90px); // 裁剪前后，圆有一点点小变化，很奇怪。
+
+    .sky {
+      position: absolute;
+      top: 0;
+      height: 180px - 56px;
+      width: 100%;
+      background: #7DDFFC;
+      animation: sky-turns-black 4s @cubic-bezier infinite;
+    }
+    @ground-height: 56px;
+    .ground {
+      position: absolute;
+      bottom: 0;
+      height: @ground-height;
+      width: 100%;
+      background: #F0DE75;
+      animation: fading-sand 4s @cubic-bezier infinite;
+    }
+
+    .sun {
+      position: absolute;
+      // 把sun的位置定在正上方，与外面的圆相切，这样好找到transform-origin的圆心。
+      top: 0;
+      left: (180px - 34px) / 2;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      position: absolute;
+      background: #FFEF00;
+      transform-origin: 50% 400%; // transform圆心在圆心向下"4倍高度"的位置
+      animation: sun-up-down 4s @cubic-bezier infinite;
+    }
+
+    .side-left {
+      width: @mountain-width;
+      height: @mountain-height;
+      position: absolute;
+      left: (180px - @mountain-width) / 2;
+      bottom: @ground-height;
+      background: #F4F4F4;
+      clip-path: polygon(0 100%, 100% 100%, 50% 0);
+      animation: pyramide-shading 4s @cubic-bezier infinite;
+    }
+    .side-right {
+      width: @mountain-width / 2;
+      height: @mountain-height;
+      right: (180px - @mountain-width) / 2;
+      position: absolute;
+      bottom: @ground-height;
+      background: #DDDADA;
+      clip-path: polygon(0 0, 30% 100%, 100% 100%);
+      animation: pyramide-shading 4s @cubic-bezier infinite reverse;
+    }
+    .shadow {
+      // 1. 首先，shadow的宽度要覆盖ground，这样才能裁剪出"满地"shadow，
+      // 2. 更进一步，shadow比ground宽，这样才能才能裁剪出延伸到"远方"的shadow
+      width: 360px;
+      height: 30px;
+      position: absolute;
+      top: 180px - @ground-height;
+      left: (180px - 360px) / 2;
+      background: rgba(0, 0, 0, 0.2);
+      clip-path: polygon(@shadow-clip-at-mountain-left 0, @shadow-clip-at-mountain-right 0, 81% 100%);
+      animation: shadow-on-the-floor 4s @cubic-bezier infinite;
+    }
+  }
+
+  @keyframes sun-up-down {
+    0% {
+      background: #F57209;
+      transform: rotate(-70deg);
+    }
+
+    30% {
+      background: #FFEF00;
+      transform: rotate(-28deg);
+    }
+
+    70% {
+      background: #FFEF00;
+      // transform: rotate(30deg); 我在这里设置了一个进度点，反而导致了动画在这里有"停滞感"，这种停滞感有点不太和谐。
+    }
+
+    100% {
+      background: #F57209;
+      transform: rotate(70deg);
+    }
+  }
+
+  @keyframes shadow-on-the-floor {
+    0% {
+      clip-path: polygon(@shadow-clip-at-mountain-left 0, @shadow-clip-at-mountain-right 0, 100% 0);
+    }
+
+    30% {
+      clip-path: polygon(@shadow-clip-at-mountain-left 0, @shadow-clip-at-mountain-right 0, 81% 100%);
+    }
+
+    70% {
+    }
+
+    100% {
+      clip-path: polygon(@shadow-clip-at-mountain-left 0, @shadow-clip-at-mountain-right 0, 0 0);
+    }
+  }
+
+  @keyframes pyramide-shading {
+    0% {
+      background: #272C34;
+    }
+    30% {
+      background: #F4F4F4;
+    }
+    70% {
+      background: #DDDADA;
+    }
+    100% {
+      background: #272C34;
+    }
+  }
+
+  @keyframes sky-turns-black {
+    0% {
+      background: #272C34;
+    }
+    30% {
+      background: #7DDFFC;
+    }
+    70% {
+      background: #7DDFFC;
+    }
+    100% {
+      background: #272C34;
+    }
+  }
+
+  @keyframes fading-sand {
+    0% {
+      background: #272C34;
+    }
+    30% {
+      background: #F0DE75;
+    }
+    70% {
+      background: #F0DE75;
+    }
+    100% {
+      background: #272C34;
+    }
+  }
+}
