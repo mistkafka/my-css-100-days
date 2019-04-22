@@ -73,10 +73,10 @@
           animation: animate-line-3 0.7s cubic-bezier(0.3, 1, 0.7, 1) forwards;
 }
 
-.no-animation {
-  -webkit-animation: none !important;
-  animation: none !important;
-}
+/*.no-animation {*/
+  /*-webkit-animation: none !important;*/
+  /*animation: none !important;*/
+/*}*/
 
 @-webkit-keyframes animate-line-1 {
   0% {

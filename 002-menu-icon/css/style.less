@@ -1,3 +1,6 @@
+/**
+ * 根据参考答案变更后，动画感觉更有"味道"
+ */
 * {
   margin: 0;
   padding: 0;
@@ -18,6 +21,11 @@ body {
 
 }
 
+@line-height: 8px;
+@line-space: 14px;
+@line-translate-y: @line-space + @line-height;
+@icon-height: @line-height * 3 + @line-space * 2;
+
 .container {
   height: 400px;
   width: 400px;
@@ -28,27 +36,22 @@ body {
 
   .menu-icon {
     width: 80px;
-    height: 52px;
+    height: @icon-height;
     position: relative;
+    cursor: pointer;
 
     .menu-icon__line {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 8px;
+      height: @line-height;
       width: 100%;
       background: white;
       border-radius: 50px;
       box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.3);
       &:first-child {
-        top: 0;
       }
       &:nth-child(2) {
-        top: 50%;
-        margin-top: -4px;
+        margin: @line-space 0;
       }
       &:last-child {
-        bottom: 0;
       }
 
     }
@@ -56,9 +59,10 @@ body {
   .menu-icon.playing-animation {
     .menu-icon__line {
       animation-direction: alternate;
-      animation-duration: 0.5s;
+      animation-duration: 0.7s;
       animation-fill-mode: forwards;
       animation-iteration-count: 2;
+      animation-timing-function: ease-in-out;
       &:first-child {
         animation-name: first-line;
       }
@@ -72,41 +76,36 @@ body {
 
     @keyframes first-line {
       0% {
-        top: 0;
+        transform: translateY(0) rotate(0);
       }
       50% {
-        top: 50%;
-        margin-top: -4px;
+        // 答案里通过margin撑开居中， 用变化translateY以达到动画的效果比改变top, bottom好很多。不知道是什么原因？
+        // 可能是因为改变absolute top，其transform-origin不会跟着一起改变的缘故吧！
+        transform: translateY(@line-translate-y) rotate(0);
       }
       100% {
-        top: 50%;
-        margin-top: -4px;
-        transform: rotate(-45deg);
+        transform: translateY(@line-translate-y) rotate(-45deg);
       }
     }
     @keyframes middle-line {
       0% {
-        transform: scale(1, 1);
-      }
-      50% {
-        transform: scale(0, 0);
+        transform: scale(1); // scale x y相同的话，可以简化
+        opacity: 1; // 加个消失透明度动画确实会更好一些
       }
       100% {
-        transform: scale(0, 0);
+        transform: scale(0);
+        opacity: 0;
       }
     }
     @keyframes last-line {
       0% {
-        bottom: 0;
+        transform: translateY(0) rotate(0);
       }
       50% {
-        bottom: 50%;
-        margin-bottom: -4px;
+        transform: translateY(-@line-translate-y) rotate(0);
       }
       100% {
-        bottom: 50%;
-        margin-bottom: -4px;
-        transform: rotate(45deg);
+        transform: translateY(-@line-translate-y) rotate(45deg);
       }
     }
   }

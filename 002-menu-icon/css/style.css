@@ -1,3 +1,6 @@
+/**
+ * 根据参考答案变更后，动画感觉更有"味道"
+ */
 * {
   margin: 0;
   padding: 0;
@@ -28,32 +31,24 @@ body {
   width: 80px;
   height: 52px;
   position: relative;
+  cursor: pointer;
 }
 .container .menu-icon .menu-icon__line {
-  position: absolute;
-  left: 0;
-  right: 0;
   height: 8px;
   width: 100%;
   background: white;
   border-radius: 50px;
   box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.3);
 }
-.container .menu-icon .menu-icon__line:first-child {
-  top: 0;
-}
 .container .menu-icon .menu-icon__line:nth-child(2) {
-  top: 50%;
-  margin-top: -4px;
-}
-.container .menu-icon .menu-icon__line:last-child {
-  bottom: 0;
+  margin: 14px 0;
 }
 .container .menu-icon.playing-animation .menu-icon__line {
   animation-direction: alternate;
-  animation-duration: 0.5s;
+  animation-duration: 0.7s;
   animation-fill-mode: forwards;
   animation-iteration-count: 2;
+  animation-timing-function: ease-in-out;
 }
 .container .menu-icon.playing-animation .menu-icon__line:first-child {
   animation-name: first-line;
@@ -66,41 +61,34 @@ body {
 }
 @keyframes first-line {
   0% {
-    top: 0;
+    transform: translateY(0) rotate(0);
   }
   50% {
-    top: 50%;
-    margin-top: -4px;
+    transform: translateY(22px) rotate(0);
   }
   100% {
-    top: 50%;
-    margin-top: -4px;
-    transform: rotate(-45deg);
+    transform: translateY(22px) rotate(-45deg);
   }
 }
 @keyframes middle-line {
   0% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(0, 0);
+    transform: scale(1);
+    opacity: 1;
   }
   100% {
-    transform: scale(0, 0);
+    transform: scale(0);
+    opacity: 0;
   }
 }
 @keyframes last-line {
   0% {
-    bottom: 0;
+    transform: translateY(0) rotate(0);
   }
   50% {
-    bottom: 50%;
-    margin-bottom: -4px;
+    transform: translateY(-22px) rotate(0);
   }
   100% {
-    bottom: 50%;
-    margin-bottom: -4px;
-    transform: rotate(45deg);
+    transform: translateY(-22px) rotate(45deg);
   }
 }
 .container .menu-icon.pause-animation .menu-icon__line {

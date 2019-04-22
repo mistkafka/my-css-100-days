@@ -25,12 +25,12 @@
       $icon.className = className.replace("pause-animation", "");
       window.setTimeout(() => {
         $icon.className = $icon.className.replace("playing-animation", "")
-      }, 1000 * 0.5);
+      }, 1000 * 0.7);
     } else {
       $icon.className = className + " playing-animation"
       window.setTimeout(() => {
         $icon.className = $icon.className + " pause-animation"
-      }, 1000 * 0.5);
+      }, 1000 * 0.7);
     }
   })
 </script>
