@@ -29,16 +29,95 @@ body {
   .menu-icon {
     width: 80px;
     height: 52px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: relative;
 
     .menu-icon__line {
+      position: absolute;
+      left: 0;
+      right: 0;
       height: 8px;
       width: 100%;
       background: white;
       border-radius: 50px;
       box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.3);
+      &:first-child {
+        top: 0;
+      }
+      &:nth-child(2) {
+        top: 50%;
+        margin-top: -4px;
+      }
+      &:last-child {
+        bottom: 0;
+      }
+
+    }
+  }
+  .menu-icon.playing-animation {
+    .menu-icon__line {
+      animation-direction: alternate;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: 2;
+      &:first-child {
+        animation-name: first-line;
+      }
+      &:nth-child(2) {
+        animation-name: middle-line;
+      }
+      &:last-child {
+        animation-name: last-line;
+      }
+    }
+
+    @keyframes first-line {
+      0% {
+        top: 0;
+      }
+      50% {
+        top: 50%;
+        margin-top: -4px;
+      }
+      100% {
+        top: 50%;
+        margin-top: -4px;
+        transform: rotate(-45deg);
+      }
+    }
+    @keyframes middle-line {
+      0% {
+        transform: scale(1, 1);
+      }
+      50% {
+        transform: scale(0, 0);
+      }
+      100% {
+        transform: scale(0, 0);
+      }
+    }
+    @keyframes last-line {
+      0% {
+        bottom: 0;
+      }
+      50% {
+        bottom: 50%;
+        margin-bottom: -4px;
+      }
+      100% {
+        bottom: 50%;
+        margin-bottom: -4px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+  .menu-icon.pause-animation {
+    .menu-icon__line {
+      animation-play-state: paused;
+    }
+  }
+  .menu-icon.resume-animation {
+    .menu-icon__line {
+      animation-play-state: running;
     }
   }
 }

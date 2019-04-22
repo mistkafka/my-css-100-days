@@ -17,5 +17,22 @@
   </div>
 </div>
 </body>
+<script>
+  var $icon = document.querySelector('.menu-icon');
+  $icon.addEventListener('click', () => {
+    var className = $icon.className || "";
+    if (className.includes("pause-animation")) {
+      $icon.className = className.replace("pause-animation", "");
+      window.setTimeout(() => {
+        $icon.className = $icon.className.replace("playing-animation", "")
+      }, 1000 * 0.5);
+    } else {
+      $icon.className = className + " playing-animation"
+      window.setTimeout(() => {
+        $icon.className = $icon.className + " pause-animation"
+      }, 1000 * 0.5);
+    }
+  })
+</script>
 </html>
 
