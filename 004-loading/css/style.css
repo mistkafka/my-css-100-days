@@ -1,3 +1,8 @@
+/**
+ * 我一开始的思路是把动画分成6个阶段，也就是三个圆的放大、缩小的过程。
+ * 但是答案的实现更好，它只把动画分成三个阶段，也就是放大的那三个，缩
+ * 小的部分直接使用`animation-fill: alternate`
+ */
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +23,6 @@ body {
 .container {
   height: 400px;
   width: 400px;
-  box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.2);
   background: #E56262;
   display: flex;
   align-items: center;
@@ -27,7 +31,6 @@ body {
 .container .loading .dot {
   background-color: white;
   border-radius: 50%;
-  box-shadow: 0 0 13px 0 rgba(2, 3, 0, 0.3);
 }
 .container .loading .dot-1 {
   display: flex;
@@ -35,7 +38,7 @@ body {
   justify-content: center;
   width: 90px;
   height: 90px;
-  animation: jump-jump-1 6s ease-in-out infinite;
+  animation: jump-jump-1 2s cubic-bezier(0.21, 0.98, 0.6, 0.99) infinite alternate;
 }
 .container .loading .dot-1 .dot-2 {
   display: flex;
@@ -43,68 +46,44 @@ body {
   justify-content: center;
   width: 60px;
   height: 60px;
-  animation: jump-jump-2 6s ease-in-out infinite;
+  animation: jump-jump-2 2s cubic-bezier(0.21, 0.98, 0.6, 0.99) infinite alternate;
 }
 .container .loading .dot-1 .dot-2 .dot-3 {
   width: 30px;
   height: 30px;
-  animation: jump-jump-3 6s ease-in-out infinite;
+  animation: jump-jump-3 2s cubic-bezier(0.21, 0.98, 0.6, 0.99) infinite alternate;
 }
 @keyframes jump-jump-1 {
-  0% {
+  0%,
+  10% {
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
     transform: scale(0);
-  }
-  16.6666% {
-    transform: scale(1);
-  }
-  83.3333% {
-    transform: scale(1);
   }
   100% {
-    transform: scale(0);
+    box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.3);
+    transform: scale(1);
   }
 }
 @keyframes jump-jump-2 {
-  0% {
-    transform: scale(0);
-  }
-  6.6666% {
-    transform: scale(0);
-  }
-  23.3333% {
-    transform: scale(1);
-  }
-  66.666% {
-    transform: scale(1);
-  }
-  83.3333% {
+  0%,
+  40% {
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
     transform: scale(0);
   }
   100% {
-    transform: scale(0);
+    box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.3);
+    transform: scale(1);
   }
 }
 @keyframes jump-jump-3 {
-  0% {
-    transform: scale(0);
-  }
-  16.6666% {
-    transform: scale(0);
-  }
-  23.3333% {
-    transform: scale(0);
-  }
-  40% {
-    transform: scale(1);
-  }
-  66.666% {
-    transform: scale(0);
-  }
-  83.3333% {
+  0%,
+  70% {
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
     transform: scale(0);
   }
   100% {
-    transform: scale(0);
+    box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.3);
+    transform: scale(1);
   }
 }
 /*# sourceMappingURL=style.css.map */
