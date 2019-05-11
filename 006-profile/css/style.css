@@ -1,0 +1,202 @@
+/**
+ * 遇到的问题
+ * 1. 一开始使用grid布局，实在是大错特错，写起来很不自然。这个布局不需要，也不适合grid.
+ *
+ * 2. 不知道怎么画avatar那两个3/4圆，我一开始想到把某一边的border-size设为0，结果不work。因为
+ *    这时候有border-radius: 50%; 会导致那一边的size其实不是为0，而是"渐变为0"。
+ *
+ *    看了参考答案才知道，它的思路也类似，不过不是把size设置为0，而是把color设置成透明色。
+ *
+ * 3. avatar动画。动画其实不难，就是使用 "transform: rotate(360deg)"进行旋转。但是，因为一开始
+ *    我觉得使用嵌套：circle-1 -> circle-2 -> avatar的结构，就不用使用绝对定位去构造3个同心圆啦～
+ *    结果......一开始旋转的时候，里面的avatar也跟外面的circle旋转。从动画上，它们是三个不同的部分，
+ *    一开始就不该嵌套～
+ */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,300);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.v-h-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.h-center {
+  display: flex;
+  justify-content: center;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  height: 400px;
+  width: 400px;
+  background: linear-gradient(to top right, #EEBE6C 0%, #CA7C4E 100%);
+  font-family: "Open Sans", Helvetica, sans-serif;
+  color: #786450;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container a {
+  color: #786450;
+}
+.container .profile-card {
+  width: 320px;
+  height: 299px;
+  border-radius: 3px;
+  background: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+}
+.container .profile-card .left-part {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.container .profile-card .avatar-name-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .profile-card .avatar-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 82px;
+  width: 82px;
+  position: relative;
+  margin-bottom: 15px;
+}
+.container .profile-card .avatar-section .circle {
+  position: absolute;
+  border: 1px solid;
+  border: 1px solid #786450;
+  border-radius: 50%;
+  transition: transform ease-in-out 2s;
+}
+.container .profile-card .avatar-section .circle-1 {
+  width: 82px;
+  height: 82px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  border: 1px solid;
+  border: 1px solid #786450;
+  border-radius: 50%;
+  transition: transform ease-in-out 2s;
+  border-right-color: transparent;
+}
+.container .profile-card .avatar-section .circle-2 {
+  width: 76px;
+  height: 76px;
+  top: 3px;
+  left: 3px;
+  position: absolute;
+  border: 1px solid;
+  border: 1px solid #786450;
+  border-radius: 50%;
+  transition: transform ease-in-out 2s;
+  border-left-color: transparent;
+}
+.container .profile-card .avatar-section:hover .circle-1 {
+  transform: rotate(360deg);
+}
+.container .profile-card .avatar-section:hover .circle-2 {
+  transform: rotate(-360deg);
+}
+.container .profile-card .avatar-section img {
+  display: block;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+.container .profile-card .name-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .profile-card .name-section .name {
+  font-size: 15px;
+  font-weight: 600;
+}
+.container .profile-card .name-section .job-title {
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: normal;
+}
+.container .profile-card .actions-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .profile-card .actions-section a {
+  width: 120px;
+  height: 30px;
+  border-radius: 50px;
+  border: 1px solid #786450;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color ease-in-out 0.5s, color ease-in-out 0.5s;
+}
+.container .profile-card .actions-section a:first-child {
+  margin-bottom: 10px;
+}
+.container .profile-card .actions-section a:hover {
+  background-color: #786450;
+  color: white;
+}
+.container .profile-card .count-section {
+  width: 120px;
+  height: 100%;
+}
+.container .profile-card .count-section ul {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  list-style-type: none;
+}
+.container .profile-card .count-section ul .count-item {
+  background-color: #f5e8df;
+  margin-bottom: 1px;
+  flex: 1;
+  min-height: 0;
+  transition: background-color ease-in-out 0.5s;
+}
+.container .profile-card .count-section ul .count-item:last-child {
+  margin-bottom: 0;
+}
+.container .profile-card .count-section ul .count-item:hover {
+  background-color: #E1CFC2;
+}
+.container .profile-card .count-section ul .count-item a {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-decoration: none;
+}
+.container .profile-card .count-section ul .count-item a .count-item__number {
+  font-size: 18px;
+  font-weight: 600;
+}
+.container .profile-card .count-section ul .count-item a .count-item__type {
+  font-size: 11px;
+}
+/*# sourceMappingURL=style.css.map */
