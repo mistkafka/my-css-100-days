@@ -12,7 +12,6 @@
  *    结果......一开始旋转的时候，里面的avatar也跟外面的circle旋转。从动画上，它们是三个不同的部分，
  *    一开始就不该嵌套～
  */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,300);
 * {
   margin: 0;
   padding: 0;
@@ -33,6 +32,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN_r8OUuhs.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'), url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UNirkOUuhs.ttf) format('truetype');
 }
 .container {
   height: 400px;
