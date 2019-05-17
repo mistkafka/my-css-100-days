@@ -1,7 +1,14 @@
 /**
  * 遇到的问题
+ * 1. 在调整细节的时候，发现跟参考答案的字体明显有差异，参考答案的会稍微粗一点点！核对了几遍之后，
+ *    都没看到样式上有什么差别。最后，对比两边的computed style，在最底部"Rendered Fonts"一栏
+ *    发现两边的字体使用的不一致。我使用的是Open Sans Light、Open Sans SemiBold，而参考答案
+ *    使用的是Open Sans、Open Sans SemiBold。 原来引入的url有一点差异，我引入的是600,300
+ *    weight，而另一边是600,400weight。
+ *    竟然还能通过这种方式控制字体！ 最后，computed style这个工具真是好用，竟然能看渲染字体。
+ *
+ * 2. timeline上的圆圈
  */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,300);
 * {
   margin: 0;
   padding: 0;
@@ -22,6 +29,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'), url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UNirkOUuhs.ttf) format('truetype');
 }
 .container {
   height: 400px;
@@ -65,10 +84,97 @@ body {
 .notifications-card > header > input {
   display: none;
 }
-.notifications-card > .notifications {
-  padding: 20px;
+.notifications-card > header .menu-icon {
+  width: 29px;
+  height: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
+.notifications-card > header .menu-icon__dash {
+  background-color: #B2DAFF;
+  transition: ease-in-out background-color 0.3s;
+  height: 3px;
+  border-radius: 3px;
+}
+.notifications-card > header .menu-icon__dash:first-child {
+  width: calc(100% - 9px);
+  position: relative;
+}
+.notifications-card > header .menu-icon__dash:first-child::after {
+  content: ' ';
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  transition: ease-in-out background-color 0.3s;
+  background-color: #B2DAFF;
+  position: absolute;
+  right: -9px;
+  top: -2px;
+}
+.notifications-card > header .menu-icon:hover .menu-icon__dash {
+  background-color: white;
+}
+.notifications-card > header .menu-icon:hover .menu-icon__dash:first-child::after {
+  background-color: white;
+}
+.notifications-card > header .title {
+  font-weight: 600;
+  font-size: 15px;
+}
+.notifications-card > header .title {
+  font-weight: 600;
+  font-size: 15px;
+}
+.notifications-card > header .fa.fa-search {
+  font-size: 21px;
+  color: #B2DAFF;
+}
+.notifications-card > .notifications {
+  padding: 0 27px;
+  flex: 1;
+  min-height: 0;
+}
+.notifications-card > .notifications .notifications__item {
+  cursor: pointer;
+  padding-left: 16px;
+  border-left: 3px solid #EBEBEB;
+  padding-bottom: 25px;
+  position: relative;
+}
+.notifications-card > .notifications .notifications__item--active,
 .notifications-card > .notifications .notifications__item:hover {
   color: #5F98CD;
+}
+.notifications-card > .notifications .notifications__item:first-child {
+  padding-top: 25px;
+}
+.notifications-card > .notifications .notifications__item:first-child::before {
+  top: 26px;
+}
+.notifications-card > .notifications .notifications__item::before {
+  box-shadow: 0 0 0 3px white;
+  box-sizing: border-box;
+  content: ' ';
+  display: block;
+  height: 11px;
+  width: 11px;
+  border: 2px solid #5F98CD;
+  border-radius: 50%;
+  position: absolute;
+  left: -7px;
+  top: -1px;
+  background-color: white;
+}
+.notifications-card > .notifications .notifications__item time.item__time {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.notifications-card > .notifications .notifications__item p.item__content {
+  font-size: 15px;
+  line-height: 1.33333333;
 }
 /*# sourceMappingURL=style.css.map */

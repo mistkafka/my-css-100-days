@@ -1,5 +1,16 @@
 /**
  * 遇到的问题
+ * 1. 在调整细节的时候，发现跟参考答案的字体明显有差异，参考答案的会稍微粗一点点！核对了几遍之后，
+ *    都没看到样式上有什么差别。最后，对比两边的computed style，在最底部"Rendered Fonts"一栏
+ *    发现两边的字体使用的不一致。我使用的是Open Sans Light、Open Sans SemiBold，而参考答案
+ *    使用的是Open Sans、Open Sans SemiBold。 原来引入的url有一点差异，我引入的是600,300
+ *    weight，而另一边是600,400weight。
+ *    竟然还能通过这种方式控制字体！ 最后，computed style这个工具真是好用，竟然能看渲染字体。
+ *
+ * 2. timeline上的圆圈外面又一个白色的"光晕"。我一开始想到的是使用outline，但是我后来发现参考答案
+ *    使用的是box-shadow。我用了一下outline，才发现outline没有outline-radius这样的属性（只有F
+ *    F有）。难怪各个ui库 input组件的outline都用box-shadow来实现，因为box-shadow会跟着border-
+ *    radius弯曲。
  */
 * {
   margin: 0;
@@ -27,14 +38,18 @@ body {
   .v-h-center();
 }
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,300);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,400);
+
+@light-blue: #B2DAFF;
+@blue: #5F98CD;
+@dark-blue: #264057;
 
 .container {
   height: 400px;
   width: 400px;
   border-radius: 3px;
   box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.3);
-  background-color: #264057;
+  background-color: @dark-blue;
   color: #666666;
   font-family: "Open Sans", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -64,7 +79,7 @@ body {
 .notifications-card > header {
   display: flex;
   height: 60px;
-  background-color: #5F98CD;
+  background-color: @blue;
   color: white;
   padding: 0 @h-padding;
   justify-content: space-between;
@@ -74,12 +89,108 @@ body {
   }
 }
 
-.notifications-card > .notifications {
-  padding: @h-padding;
+.notifications-card > header .menu-icon {
+  width: 29px;
+  height: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  &__dash {
+    background-color: @light-blue;
+    transition: ease-in-out background-color 0.3s;
+    height: 3px;
+    border-radius: 3px;
 
-  .notifications__item {
-    &:hover {
-      color: #5F98CD;
+    &:first-child {
+      width: calc(100% - 9px);
+      position: relative;
+      &::after {
+        content: ' ';
+        display: block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        transition: ease-in-out background-color 0.3s;
+        background-color: @light-blue;
+        position: absolute;
+        right: -9px;
+        top: -2px;
+      }
     }
+  }
+
+  &:hover {
+    .menu-icon__dash {
+      background-color: white;
+      &:first-child {
+        &::after {
+          background-color: white;
+        }
+      }
+    }
+  }
+}
+
+.notifications-card > header .title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.notifications-card > header .title {
+  font-weight: 600;
+  font-size: 15px;
+}
+.notifications-card > header .fa.fa-search {
+  font-size: 21px;
+  color: @light-blue;
+}
+
+.notifications-card > .notifications {
+  padding: 0 27px;
+  flex: 1;
+  min-height: 0;
+}
+
+.notifications-card > .notifications .notifications__item {
+  cursor: pointer;
+  &--active,
+  &:hover {
+    color: @blue;
+  }
+  padding-left: 16px;
+  border-left: 3px solid #EBEBEB;
+  padding-bottom: 25px;
+  &:first-child {
+    padding-top: 25px;
+    &::before {
+      top: 26px;
+    }
+  }
+
+  position: relative;
+  &::before {
+    box-shadow: 0 0 0 3px white;
+    box-sizing: border-box;
+    content: ' ';
+    display: block;
+    height: 11px;
+    width: 11px;
+    border: 2px solid @blue;
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: -1px;
+    background-color: white;
+  }
+
+  time.item__time {
+    display: block;
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+  p.item__content {
+    font-size: 15px;
+    line-height: 20 / 15;
   }
 }
