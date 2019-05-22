@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container">
+<div class="container" id="container">
   <div class="sidebar-menu">
     <ul>
       <li><span class="fa fa-dashboard"></span>Dashboard</li>
@@ -22,14 +22,14 @@
   </div>
   <div class="notifications-card">
     <header>
-      <span class="menu-icon">
+      <span class="menu-icon" id="menu-icon">
         <div class="menu-icon__dash">
         </div>
         <div class="menu-icon__dash"></div>
       </span>
       <span class="title">Notifications</span>
-      <input placeholder="Search..."/>
-      <span class="fa fa-search"></span>
+      <input placeholder="Search ..." id="top-search-input"/>
+      <span class="fa fa-search" id="top-search-icon"></span>
     </header>
     <div class="notifications">
       <div class="notifications__item">
@@ -53,6 +53,7 @@
     </div>
   </div>
 </div>
+<script src="./js/index.js"></script>
 </body>
 </html>
 
