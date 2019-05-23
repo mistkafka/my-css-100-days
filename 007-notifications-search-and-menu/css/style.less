@@ -11,6 +11,20 @@
  *    使用的是box-shadow。我用了一下outline，才发现outline没有outline-radius这样的属性（只有F
  *    F有）。难怪各个ui库 input组件的outline都用box-shadow来实现，因为box-shadow会跟着border-
  *    radius弯曲。
+ *
+ * 3. 在实现那个input的动画的时候，实在不知道要怎么让input在隐藏的时候，不会拦截掉menu-icon的click。
+ *    最后，我想了一个丑陋的方案（跟参考答案相比），隐藏的时候，z-index: -1，显示的时候，z-index设高。
+ *    当 **隐藏动画完成** 之后，再把z-index设置为-1。这就需要动用js了。这当中最烦的部分就是z-index会
+ *    影响动画的进行，因为它无法transition，会立即生效。但是如果不用z-index，把input放到"幕后"，我又
+ *    不知道如何让前面的input不影响后面的menu-icon click。
+ *
+ *    看了参考答案之后才发现，真的是可以让z-index高的element不挡住z-index低的element的鼠标事件......
+ *    使用pointer-event: none就可以了。这个就是参考答案优雅的地方！
+ *
+ * 4. transition-time 0.2s/0.3s 真是一个黄金时间，适用于大部分transition。
+ *
+ * 5. 忘记实现notification item的动画。感觉自己对动画的理解力还是不够。
+ *
  */
 * {
   margin: 0;
@@ -136,14 +150,12 @@ body {
     left: 13px;
     border: 0;
     transform: translateX(10px);
-    z-index: -1;
+    pointer-events: none;
     &:focus {
       outline: 0;
     }
-    &.show {
-      z-index: 1000;
-    }
     &.active {
+      pointer-events: all;
       transform: translateX(0);
       opacity: 1;
     }
@@ -164,7 +176,7 @@ body {
     border-radius: 3px;
 
     &:first-child {
-      width: calc(100% - 9px);
+      width: 20px;
       position: relative;
       &::after {
         content: ' ';
@@ -206,12 +218,27 @@ body {
   font-size: 21px;
   cursor: pointer;
   color: @light-blue;
+  transition: all ease-in-out 0.2s;
+  &:hover {
+    color: white;
+  }
 }
 
 .notifications-card > .notifications {
   padding: 0 27px;
   flex: 1;
   min-height: 0;
+  position: relative;
+  &::before {
+    position: absolute;
+    left: 24px;
+    top: 0;
+    content: ' ';
+    display: block;
+    height: 100%;
+    width: 3px;
+    background-color: #EBEBEB;
+  }
 }
 
 .notifications-card > .notifications .notifications__item {
@@ -221,7 +248,6 @@ body {
     color: @blue;
   }
   padding-left: 16px;
-  border-left: 3px solid #EBEBEB;
   padding-bottom: 25px;
   &:first-child {
     padding-top: 25px;
@@ -253,6 +279,29 @@ body {
   }
   p.item__content {
     font-size: 15px;
+
     line-height: 20 / 15;
+  }
+
+  opacity: 0;
+  .item-animation (@index) when (@index > 0) {
+    .item-animation(@index - 1);
+    &:nth-child(@{index}) {
+      animation: notification-item-animation 0.5s ease-out forwards 0.2s * @index;
+    }
+  }
+  .item-animation(3);
+}
+
+@keyframes notification-item-animation {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 60px, 0);
+  }
+
+  100% {
+
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
