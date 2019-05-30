@@ -26,7 +26,6 @@
  * 5. 忘记实现notification item的动画。感觉自己对动画的理解力还是不够。
  *
  */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,400);
 * {
   margin: 0;
   padding: 0;
@@ -47,6 +46,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'), url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UNirkOUuhs.ttf) format('truetype');
 }
 .container {
   height: 400px;

@@ -1,0 +1,71 @@
+/**
+ * 问题
+ *
+ * 1. 我感觉这道题有点太难了，难在动画设计上。我知道要用transform: rotate，然后大概错开点动画时间。但是实在对剩余
+ *    的部分没有感觉。
+ *
+ * 2. 看了参考答案才发现，参考答案使用css的filter对比度与模糊来达到几个球相"融合"的效果。我自己对"对比度"、"饱和度"
+ *    等图像概念还一无所知。感觉特别需要补一补。
+ *
+ */
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+  background-color: black;
+  border-radius: 3px;
+  box-shadow: 3px 3px 15px 0 rgba(0, 0, 0, 0.3);
+  position: relative;
+  filter: contrast(25);
+}
+
+.ball {
+  background-color: white;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  filter: blur(15px);
+}
+
+.ball-style (@index) when (@index > 0) {
+  .ball-style(@index - 1);
+  .ball-@{index} {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    &:after {
+      position: absolute;
+      display: block;
+      content: ' ';
+      background-color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      transform-origin: (40px - @index * 3) (40px - @index * 3);
+      animation: rotate-ani 2.5s + @index / 5 ease-in-out 1s * @index / 5 infinite;
+      filter: blur(5px);
+    }
+  }
+}
+.ball-style(8);
+
+@keyframes rotate-ani {
+  from {
+    transform: rotate(0) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: rotate(360deg) translate3d(0, 0, 0);
+  }
+}
