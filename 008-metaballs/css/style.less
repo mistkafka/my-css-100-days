@@ -60,6 +60,31 @@ body {
 }
 .ball-style(8);
 
+.droplet-style (@i) when (@i > 0) {
+  .droplet-style(@i - 1);
+
+
+  .droplet-@{i} {
+    position: absolute;
+    width: 7px + @i;
+    height: 7px + @i;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 7px + @i;
+      height: 7px + @i;
+      border-radius: 50%;
+      background-color: white;
+      filter: blur(3px);
+      transform-origin: 60px - @i * 2  60px - @i * 2;
+      animation: rotate-ani (3.5s + @i / 5) ease-in-out @i / 5s infinite;
+    }
+  }
+}
+.droplet-style(10);
+
 @keyframes rotate-ani {
   from {
     transform: rotate(0) translate3d(0, 0, 0);
