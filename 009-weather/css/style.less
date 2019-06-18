@@ -1,0 +1,217 @@
+/**
+ * 问题
+ * 1. 发现font的渲染根本不是自己想的那么回事，详见:
+ *    https://github.com/mistkafka/misc-note/blob/master/css.org#%E5%AD%97%E4%BD%93%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98--how-to-compute-inline-element-height
+ *
+ * 2. 我决定放弃009。这样的动画对目前的我而言，感觉有点复杂。另外，我觉得这样的复杂动画用css来写太费神了，有没有什么js kit？最后，相比012、013等，这个例子对平时工作的帮助感觉不高。
+ */
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #394568;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  width: 400px;
+  height: 400px;
+  border-radius: 3px;
+  box-shadow: 3px 3px 15px 0 rgba(0, 0, 0, 0.3);
+
+  flex-direction: column;
+  .sky {
+    min-height: 0;
+    flex: 1;
+    background-color: #1A2238;
+    position: relative;
+    overflow: hidden;
+
+    .moon {
+      height: 67px;
+      width: 67px;
+      border-radius: 50%;
+      background-color: #F6EDBD;
+      box-shadow: 0 0 10px 0 #F6EDBD;
+      position: absolute;
+      top: 45px;
+      left: 55px;
+      overflow: hidden;
+    }
+    .crater {
+      position: absolute;
+      background-color: #ECE1A8;
+      border-radius: 50%;
+      &:nth-child(-n + 3) {
+        width: 11px;
+        height: 11px;
+      }
+      &:nth-child(n + 4) {
+        width: 6px;
+        height: 6px;
+      }
+      &:nth-child(1) {
+        top: 9px;
+        left: 28px;
+      }
+      &:nth-child(2) {
+        top: 12px;
+        left: 0;
+      }
+      &:nth-child(3) {
+        top: 56px;
+        left: 10px;
+      }
+      &:nth-child(4) {
+        top: 37px;
+        left: 49px;
+      }
+      &:nth-child(5) {
+        top: 24px;
+        left: 61px;
+      }
+      &:nth-child(6) {
+        top: 55px;
+        left: 33px;
+      }
+      &:nth-child(7) {
+        top: 17px;
+        left: 46px;
+      }
+      &:nth-child(8) {
+        top: 28px;
+        left: 27px;
+      }
+      &:nth-child(9) {
+        top: 39px;
+        left: 17px;
+      }
+      &:nth-child(10) {
+        width: 4px;
+        height: 4px;
+        top: 25px;
+        left: 15px;
+      }
+      &:nth-child(11) {
+        width: 4px;
+        height: 4px;
+        top: 37px;
+        left: 37px;
+      }
+    }
+
+
+    .hill {
+      border-radius: 50%;
+      position: absolute;
+      width: 337px;
+      height: 281px;
+    }
+    .hill-1, .hill-2 {
+      background-color: #26314F;
+    }
+    .hill-3, .hill-4, .hill-5 {
+      background-color: #303C5D;
+    }
+    .hill-1 {
+      top: 201px;
+      left: -57px;
+    }
+    .hill-2 {
+      top: 197px;
+      left: 177px;
+    }
+    .hill-3 {
+      top: 248px;
+      left: -137px;
+    }
+    .hill-4 {
+      top: 221px;
+      left: 63px;
+    }
+    .hill-5 {
+      top: 248px;
+      left: 292px;
+    }
+
+    .big-drop {
+      position: absolute;
+      top: 50px;
+      left: 200px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #7FC1F9;
+      &:before {
+        position: absolute;
+        content: '';
+        display: block;
+        top: -2px;
+        left: 1px;
+        width: 6px;
+        height: 6px;
+        background-color: #7FC1F9;
+        border-radius: 3px;
+      }
+      &:after {
+        position: absolute;
+        content: '';
+        display: block;
+        top: -5px;
+        left: 2px;
+        width: 4px;
+        height: 10px;
+        background-color: #7FC1F9;
+        border-radius: 50%;
+      }
+    }
+  }
+  .weather-info-panel {
+    height: 90px;
+    border-top: 1px solid;
+  }
+}
+
+.weather-info-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+
+  .today {
+    display: flex;
+    align-items: center;
+    .temperature {
+      font-size: 45px;
+      margin-right: 13px;
+    }
+  }
+  .future-days {
+    .week-day {
+      text-transform: uppercase;
+      display: inline-block;
+      width: 50px;
+      text-align: right;
+      margin-right: 8px;
+    }
+    .temperature {
+      display: inline-block;
+      width: 61px;
+      text-align: right;
+      font-weight: 400;
+    }
+  }
+}
