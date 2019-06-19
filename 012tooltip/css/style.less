@@ -1,0 +1,127 @@
+// 这个没有什么太大的收获。关于Tooltip，我还是对动态化的Tooltip比较感兴趣。
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic);
+
+* {
+  box-sizing: border-box;
+}
+
+@blue: #4CB6DE;
+@dark-blue: #286F8A;
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    width: 400px;
+    height: 400px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.03);
+    background-color: @blue;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    font-family: "Open Sans", Helvetica, sans-serif;;
+  }
+}
+
+.container blockquote {
+  font-size: 24px;
+  line-height: 35px;
+  color: white;
+  margin: 0 0 20px 0;
+
+  mark {
+    display: inline-block;
+    padding: 0 10px;
+    color: white;
+    background-color: @dark-blue;
+    cursor: pointer;
+
+    position: relative;
+
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      top: -142px;
+      left: -95px;
+      display: block;
+      font-size: 16px;
+      line-height: 24px;
+      cursor: text;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      transform: translate3d(0, -20px, 0);
+      opacity: 0;
+
+      width: 300px;
+      .title {
+        height: 35px;
+        padding: 0 17px;
+        display: flex;
+        align-items: center;
+        color: @dark-blue;
+        background: white;
+      }
+      .content {
+        background-color: @dark-blue;
+        padding: 13px 17px;
+      }
+
+      &:after {
+        display: block;
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 10px;
+        height: 10px;
+        background: @dark-blue;
+        left: 150px;
+        transform: translate(50%, 50%) rotate(45deg);
+      }
+    }
+
+    &:hover .tooltip {
+      pointer-events: auto;
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+
+  position: relative;
+  .quote-sign {
+    font-family: Arial;
+    font-size: 250px;
+    color: #6AC2E3;
+    position: absolute;
+    line-height: 0;
+    top: -81px;
+    left: -20px;
+  }
+  .quote-content {
+    position: relative;
+  }
+}
+
+.container .author {
+  color: white;
+  font-size: 20px;
+  font-style: italic;
+}
+
+@keyframes fade-in {
+  from {
+    transform: translate3d(0, -10px, 0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+}
