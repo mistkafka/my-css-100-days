@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>013 user gallery</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="gallery">
+  <div class="card" v-for="user in users" :key="user.id" @click="handleClickCard(user)">
+    <img :src="user.avatar">
+    <div class="plus"></div>
+  </div>
+  <div class="detail" key="detail-wrapper" :class="!showDetail ? 'hide' : ''">
+    <div class="close" @click="showDetail = false"></div>
+    <img class="background" src="http://100dayscss.com/codepen/13-1-header.jpg">
+    <img class="avatar" :src="selectedUser.avatar">
+    <div class="infos">
+      <div class="name">{{ selectedUser.name }}</div>
+      <div class="actions">
+        <div class="action">
+          <span class="fa fa-phone"></span>
+        </div>
+        <div class="action">
+          <span class="fa fa-comment"></span>
+        </div>
+        <div class="action">
+          <span class="fa fa-heart"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
