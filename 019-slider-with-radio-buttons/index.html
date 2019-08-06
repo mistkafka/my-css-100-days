@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>019 slider with radio buttons</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="slider-viewport">
+  <div class="slider-canvas" :style="canvasTransform">
+    <div class="slider-item" v-for="item in uiSliders" :style="item.style"></div>
+  </div>
+  <div class="slider-radios">
+    <div class="slider-radio-item" v-for="(item, index) in sliders" :key="index" @click="handleClickRadio(index)"></div>
+    <div class="slider-radio-active-fill" :style="fillBallTransform"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
